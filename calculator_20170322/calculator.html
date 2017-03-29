@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>calculator</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="calc.css">
+</head>
+<body>
+	<div class="border">
+		<p class="display" id="dis">0</p>
+		<div class="button">
+			<ul class="num">
+				<li class="n1" id="n_1" onmousedown="play('n_1')" onmouseup="mouseup('n_1')">1</li>
+				<li class="n2" id="n_2" onmousedown="play('n_2')" onmouseup="mouseup('n_2')">2</li>
+				<li class="n3" id="n_3" onmousedown="play('n_3')" onmouseup="mouseup('n_3')">3</li>
+				<li class="n4" id="n_4" onmousedown="play('n_4')" onmouseup="mouseup('n_4')">4</li>
+				<li class="n5" id="n_5" onmousedown="play('n_5')" onmouseup="mouseup('n_5')">5</li>
+				<li class="n6" id="n_6" onmousedown="play('n_6')" onmouseup="mouseup('n_6')">6</li>
+				<li class="n7" id="n_7" onmousedown="play('n_7')" onmouseup="mouseup('n_7')">7</li>
+				<li class="n8" id="n_8" onmousedown="play('n_8')" onmouseup="mouseup('n_8')">8</li>
+				<li class="n9" id="n_9" onmousedown="play('n_9')" onmouseup="mouseup('n_9')">9</li>
+				<li class="n10" id="n_0" onmousedown="play('n_0')" onmouseup="mouseup('n_0')">0</li>
+				<li class="nd" id="n_d" onmousedown="play('n_d')" onmouseup="mouseup('n_d')">.</li>
+				<li class="equal" id="equal" onmousedown="play('equal')" onmouseup="mouseup('equal')">=</li>
+			</ul>
+			<ul class="symbol">
+				<li id="ac" onmousedown="play('ac')" onmouseup="mouseup('ac')">AC</li>
+				<li id="plus" onmousedown="play('plus')" onmouseup="mouseup('plus')">+</li>
+				<li id="minus" onmousedown="play('minus')" onmouseup="mouseup('minus')">-</li>
+				<li id="multiply" onmousedown="play('multiply')" onmouseup="mouseup('multiply')">*</li>
+				<li id="devide" onmousedown="play('devide')" onmouseup="mouseup('devide')">/</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var end = 0;
+	var now = 0;
+	var symbol;
+	var flag = 1;//输完数字flag值为1;输完符号flag 值为2;
+	var disp = document.getElementById("dis");
+
+	function len(str)//限制显示位数
+	{
+		if (str.length>12) 
+		{
+			str = str.substring(0,12);
+		}
+		return str;
+	}
+
+	function mouseup(id)
+	{
+		document.getElementById(id).style.color =  "#fff";
+		document.getElementById(id).style.textShadow =  "none";
+		document.getElementById(id).style.boxShadow = " 2px 2px 3px #1E1E1E";
+	}
+
+	function play(id)
+	{
+		document.getElementById(id).style.color =  "#FFD700";
+		document.getElementById(id).style.textShadow =  "0 0 10px #FFFF00";
+		document.getElementById(id).style.boxShadow = "none";
+		boxShadow : "none";
+		var i;
+		var str_end;
+		var input = document.getElementById(id).innerHTML;
+		i = Number(input);
+		
+		if (isNaN(i) && input != "." && input != "AC") 
+		{
+			now = Number(now);
+			if (symbol != null) 
+			{
+				// if (flag == 1) 
+				// {
+					if (symbol == "+")  
+						end = end + now;		
+					if (symbol == "-") 
+						end = end - now;		
+					if (symbol == "*") 
+						end = end * now;			
+					if (symbol == "/") 
+					{
+						if (now == 0) 
+						{
+							end = 0;
+							now = 0;
+							symbol = null;
+							// flag = 1;
+							disp.innerHTML = "ERROR";
+							return false;
+						}
+						else
+						{
+							end = end / now;
+						}
+					}
+
+				// }	
+			}
+			else
+			{
+				end = now;
+			}
+			now = 0;
+			symbol = input;
+			str_end = String(end);
+			str_end = len(str_end);
+			disp.innerHTML = str_end;
+			// flag = 2;
+		}
+		else if (input == "AC") 
+		{
+			end = 0;
+			now = 0;
+			symbol = null;
+			// flag = 1;
+			disp.innerHTML = "0";
+		}	
+
+		else
+		{
+			now = now + input;
+			// flag = 1;
+			if (isNaN(Number(now))) 
+				now = now.split(".")[0]+"."+now.split(".")[1];//解决对同一个数字输入多个小数点产生的错误;
+			if (now.charAt(now.length-1) == ".")
+			{
+				disp.innerHTML = len(String(now/1)/1+".");
+				now = disp.innerHTML;
+			}
+			else
+			{
+				disp.innerHTML = len(String(now/1))/1;
+				now = disp.innerHTML;
+			}
+		}
+	}
+</script>
+</html>
