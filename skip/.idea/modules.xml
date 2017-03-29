@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/calculator_20170322.iml" filepath="$PROJECT_DIR$/.idea/calculator_20170322.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/skip.iml" filepath="$PROJECT_DIR$/.idea/skip.iml" />
     </modules>
   </component>
 </project>
